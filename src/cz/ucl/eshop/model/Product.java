@@ -1,9 +1,7 @@
 package cz.ucl.eshop.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -17,6 +15,8 @@ public class Product {
     private String description;
     @Column(name = "units_in_stock")
     private int unitsInStock;
+    @OneToMany(mappedBy = "product")
+    private List<OrderedItem> orderedItems;
 
     public long getId() {
         return id;

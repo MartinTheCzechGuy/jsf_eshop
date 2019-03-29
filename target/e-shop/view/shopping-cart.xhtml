@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Shopping Cart</title>
+    </h:head>
+
+    <h:body>
+        <h:outputLabel value="I am your cart. So far you have selected #{shoppingCart.selectedProducts.size} products listed bellow"/>
+
+        <ui:repeat value="#{shoppingCart.selectedProducts}" var="selectedProduct">
+            <ul>
+                #{selectedProduct.name}
+            </ul>
+        </ui:repeat>
+
+        <h:link value="Proceed" outcome="contact-info.xhtml"/>
+    </f:view>
+    </h:body>
+</html>

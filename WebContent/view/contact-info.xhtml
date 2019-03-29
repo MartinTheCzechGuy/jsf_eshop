@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Contact info</title>
+</h:head>
+
+<h:body>
+    <h:form id="contact-info-form">
+        First name:
+        <h:inputText required="true" value="#{order.firstName}"/>
+        Last name:
+        <h:inputText required="true" value="#{order.lastName}"/>
+        City:
+        <h:inputText required="true" value="#{order.city}"/>
+        Street:
+        <h:inputText required="true" value="#{order.street}"/>
+        Number of the house:
+        <h:inputText required="true" value="#{order.houseNumber}"/>
+        Mail:
+        <h:inputText required="true" value="#{order.mail}"/>
+        Telephone:
+        <h:inputText required="true" value="#{order.telephoneNumber}"/>
+        <h:commandButton value="Submit" action="payment-info"/>
+        <h:commandButton value="Cancel" action="#{order.endConversation()}"/>
+    </h:form>
+</h:body>
+</html>

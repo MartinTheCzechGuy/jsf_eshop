@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <!--link href="stylesheet.css" rel="stylesheet" type="text/css" /-->
+    <h:outputStylesheet name="style.css" library="css" />
+    <!-- dva pokusy o font awesome ikonky -->
+    <!--link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"-->
+    <!--script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script-->
+</h:head>
+
+<h:body>
+    <div id="page">
+        <div id="header">
+            <ul>
+                <li><a href="Products">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li style="float:right"><a class="active" href=""><!--i class="fas fa-shopping-cart"></i--></a></li>
+            </ul>
+        </div>
+
+        <div id="page-content">
+            <ui:insert name="page-content">
+                <ui:include src=""/>
+            </ui:insert>
+        </div>
+    </div>
+</h:body>
+
+<f:view>
+    <h:outputLabel value="Hello, world"/>
+</f:view>
+</html>
+

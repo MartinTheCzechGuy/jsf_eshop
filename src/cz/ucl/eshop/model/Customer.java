@@ -1,9 +1,6 @@
 package cz.ucl.eshop.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -19,6 +16,9 @@ public class Customer {
     private int telephone;
     @OneToMany(mappedBy = "customer")
     private List<CreditCard> creditCardList;
+    @ManyToMany
+    @JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses;
 
     public long getId() {
         return id;

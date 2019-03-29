@@ -1,5 +1,6 @@
 package cz.ucl.eshop.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,11 +9,14 @@ import javax.persistence.Id;
 public class Product {
 
     @Id
+    @Column(name = "product_id")
     private long id;
     private String name;
     private double price;
     private String img;
     private String description;
+    @Column(name = "units_in_stock")
+    private int unitsInStock;
 
     public long getId() {
         return id;

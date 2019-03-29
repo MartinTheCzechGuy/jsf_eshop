@@ -1,6 +1,7 @@
 package cz.ucl.eshop.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "ordered_item")
 public class OrderedItem {
@@ -12,6 +13,8 @@ public class OrderedItem {
     private Product product;
     private int quantity;
     private double price;
+    @ManyToMany(mappedBy = "orderedItemList")
+    private List<Order> orderList;
 
     public long getId() {
         return id;

@@ -19,6 +19,8 @@ public class Customer {
     @ManyToMany
     @JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
     private List<Address> addresses;
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orderList;
 
     public long getId() {
         return id;

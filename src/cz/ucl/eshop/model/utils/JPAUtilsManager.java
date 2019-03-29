@@ -2,6 +2,7 @@ package cz.ucl.eshop.model.utils;
 
 import cz.ucl.eshop.model.Product;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -24,5 +25,10 @@ public class JPAUtilsManager implements Serializable {
     public List<Product> getAllProducts(){
         Query query = entityManager.createQuery("from product");
         return query.getResultList();
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("JPA init()");
     }
 }

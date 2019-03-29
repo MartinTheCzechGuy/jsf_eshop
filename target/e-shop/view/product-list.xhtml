@@ -9,8 +9,17 @@
     <h:body>
         <ui:composition template="layout.xhtml">
             <ui:define name="page-content">
+                <p>MAras</p>
+                <h:dataTable value="#{JPAUtilsManager.getAllProducts}" var="product">
+                    <h:column>
+                        <h:graphicImage value="resources/images/#{product.img}.jpg" alt="alternatiiva"/>
+                    </h:column>
 
-                <p>What is your name?dd</p>
+                    <h:column>
+                        <h1>#{product.name}</h1>
+                        <p>#{product.description}</p>
+                    </h:column>
+                </h:dataTable>
 
             </ui:define>
         </ui:composition>

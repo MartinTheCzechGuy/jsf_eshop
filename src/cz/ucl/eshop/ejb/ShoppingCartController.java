@@ -91,23 +91,21 @@ public class ShoppingCartController implements Serializable {
         return "product-list";
     }
 
-    public void changeQuantity (long id) {
+    public String changeQuantity (long productId) {
+        Product product = JPAService.findProductById(productId);
+        OrderedItem orderedItem = this.itemAlreadyInCart(product);
 
-        // najit orderedItem = stream
-
-        // zkontrolovat mnozstvi, jestli muzes pridat - PRVNI
-
-        // odebrat z Produktuna sklade
-
-        OrderedItem orderedItem = JPAService.findItemById(id);
-
-        orderedItem.setQuantity(selectedQuantity);
-        orderedItem.setPriceAllUnits(selectedQuantity*orderedItem.getProduct().getPrice());
-
-        JPAService.saveOrderedItem(orderedItem);
-
+        if (selectedQuantity <= orderedItem.getProduct().getUnitsInStock()) {
+            orderedItem.setQuantity(orderedItem.getQuantity() + selectedQuantity);
+            product.setUnitsInStock(product.getUnitsInStock() - selectedQuantity);
+            quantityUnavaible = false;
+            JPAService.saveProduct(product);
+            orderedItem.setPriceAllUnits(product.getPrice()* orderedItem.getQuantity());
+        } else {
+            quantityUnavaible = true;
+        }
         selectedQuantity = 1;
-
+        return "shopping-cart";
     }
 
     public void changeAmount(long productId, Integer newAmount){

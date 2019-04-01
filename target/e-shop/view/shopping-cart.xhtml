@@ -31,14 +31,16 @@
                             <h:outputText value="Quantity: #{selectedItem.quantity}"/>
                             <h:outputLabel for="amount" value="New Quantity: "/>
                             <h:inputText id="amount" required="true" value="#{shoppingCartController.selectedQuantity}"/>
-                            <h:commandButton value="Change quantity" action="#{shoppingCartController.changeQuantity(selectedItem.id)}">
-                                <f:ajax execute="@form" render="@form shoppingCartTable" />
-                            </h:commandButton>
+                            <h:commandButton value="Change quantity" action="#{shoppingCartController.changeQuantity(selectedItem.product.id)}"/>
                         </h:form>
                     </h:column>
                 </h:dataTable>
 
                 <h:link value="Proceed" outcome="checkout"/>
+
+                <h:outputScript rendered="#{shoppingCartController.quantityUnavaible}">
+                    alert("Selected amount is not avaible.");
+                </h:outputScript>
             </ui:define>
         </ui:composition>
     </h:body>

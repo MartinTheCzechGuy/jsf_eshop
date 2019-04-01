@@ -6,6 +6,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head></h:head>
+
     <h:body>
         <ui:composition template="layout.xhtml">
             <ui:define name="page-content">
@@ -27,6 +28,10 @@
                         </h:form>
                     </h:column>
                 </h:dataTable>
+
+                <h:outputScript rendered="#{shoppingCartController.quantityUnavaible}">
+                    alert("Selected amount is not avaible, one item has been added to the cart.");
+                </h:outputScript>
 
             </ui:define>
         </ui:composition>

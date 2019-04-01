@@ -19,6 +19,22 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<OrderedItem> orderedItems;
 
+    public int getUnitsInStock() {
+        return unitsInStock;
+    }
+
+    public void setUnitsInStock(int unitsInStock) {
+        this.unitsInStock = unitsInStock;
+    }
+
+    public List<OrderedItem> getOrderedItems() {
+        return orderedItems;
+    }
+
+    public void setOrderedItems(List<OrderedItem> orderedItems) {
+        this.orderedItems = orderedItems;
+    }
+
     public long getId() {
         return id;
     }

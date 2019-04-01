@@ -18,6 +18,10 @@ public class OrderedItem {
     @JoinColumn(name = "order_of_goods_id")
     private Order order;
 
+    public OrderedItem(Product product){
+        this.product = product;
+    }
+
     public Order getOrder() {
         return order;
     }

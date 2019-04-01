@@ -2,9 +2,9 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="e-shop" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="e-shop" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-		<!-- class>cz.ucl.eshop.XXX</class-->
+		<class>cz.ucl.eshop.model.Product</class>
 		
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="validate" />

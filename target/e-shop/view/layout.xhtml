@@ -21,7 +21,7 @@
                     <li><a href="Products">Home</a></li>
                     <li><a href="#news">News</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li style="float:right"><a class="active" href=""><!--i class="fas fa-shopping-cart"></i--></a></li>
+                    <li style="float:right"><h:link value="Items: #{shoppingCartController.selectedProducts.size()}" outcome="shopping-cart"><!--i class="fas fa-shopping-cart"></i--></h:link></li>
                 </ul>
             </div>
 

@@ -9,14 +9,22 @@
     <h:body>
         <ui:composition template="layout.xhtml">
             <ui:define name="page-content">
-                <h:dataTable value="#{JPAUtilsManager.getAllProducts}" var="product">
+                <h:dataTable value="#{productListController.productList}" var="selectedItem">
                     <h:column>
-                        <h:graphicImage value="resources/images/#{product.img}.jpg" alt="alternatiiva"/>
+                        <h:graphicImage value="resources/images/#{selectedItem.img}" alt="image not found"/>
                     </h:column>
 
                     <h:column>
-                        <h1>#{product.name}</h1>
-                        <p>#{product.description}</p>
+                        <h1>#{selectedItem.name}</h1>
+                        <p>#{selectedItem.description}</p>
+                    </h:column>
+
+                    <h:column>
+                        <h:form>
+                            <h:inputText id="amount" required="true" value="#{shoppingCartController.selectedQuantity}"/>
+                            <h:outputLabel for="amount" value="amount: "/>
+                            <h:commandButton value="Add to cart" action="#{shoppingCartController.addItem(selectedItem.id)}"/>
+                        </h:form>
                     </h:column>
                 </h:dataTable>
 

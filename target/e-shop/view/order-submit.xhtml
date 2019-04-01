@@ -7,15 +7,34 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
-    <title>Order Submit</title>
+    <title>Overview</title>
 </h:head>
 
 <h:body>
-    <h:outputLabel value="Order submit"/>
+
+    <h:dataTable value="#{orderController.order.orderedItemList}" var="selectedItem" id="ordersumTable">
+        <h:column>
+            <h:outputText value="#{selectedItem.product.name}"/>
+        </h:column>
+
+        <h:column>
+            <h:outputText value="Quantity #{selectedItem.quantity}"/>
+            <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
+        </h:column>
+
+        <h:column>
+            <h:outputText value="#{orderController.order.totalPrice}"/>
+        </h:column>
+
+    </h:dataTable>
+
     <h:form>
-        <!-- musis rozlisit, jestli nakup dokonci - ulozeni do DB, nebo zrusi -->
-        <h:commandButton value="Submit order" action="#{order.endConversation()}"/>
-        <h:commandButton value="Cancel" action="#{order.endConversation()}"/>
+        <h:commandButton value="Submit order" action="#{orderController.submitOrder()}"/>
+        <h:commandButton value="Cancel" action="#{orderController.cancelOrder()}"/>
     </h:form>
+
+
+
+
 </h:body>
 </html>

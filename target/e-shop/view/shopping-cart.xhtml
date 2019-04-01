@@ -10,15 +10,36 @@
     </h:head>
 
     <h:body>
-        <h:outputLabel value="I am your cart. So far you have selected #{shoppingCart.selectedProducts.size} products listed bellow"/>
+        <ui:composition template="layout.xhtml">
+            <ui:define name="page-content">
+                <h:outputLabel value="So far you have selected #{shoppingCartController.selectedProducts.size()} products listed bellow:"/>
+                <h:dataTable value="#{shoppingCartController.selectedProducts}" var="selectedItem" id="shoppingCartTable">
+                    <h:column>
+                        <h:outputText value="#{selectedItem.product.img}"/>
+                    </h:column>
 
-        <ui:repeat value="#{shoppingCart.selectedProducts}" var="selectedProduct">
-            <ul>
-                #{selectedProduct.name}
-            </ul>
-        </ui:repeat>
+                    <h:column>
+                        <h:outputText value="#{selectedItem.product.name}"/>
+                    </h:column>
 
-        <h:link value="Proceed" outcome="contact-info.xhtml"/>
-    </f:view>
+                    <h:column>
+                        <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
+                    </h:column>
+
+                    <h:column>
+                        <h:form>
+                            <h:outputText value="Quantity: #{selectedItem.quantity}"/>
+                            <h:outputLabel for="amount" value="New Quantity: "/>
+                            <h:inputText id="amount" required="true" value="#{shoppingCartController.selectedQuantity}"/>
+                            <h:commandButton value="Change quantity" action="#{shoppingCartController.changeQuantity(selectedItem.id)}">
+                                <f:ajax execute="@form" render="@form shoppingCartTable" />
+                            </h:commandButton>
+                        </h:form>
+                    </h:column>
+                </h:dataTable>
+
+                <h:link value="Proceed" outcome="checkout"/>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

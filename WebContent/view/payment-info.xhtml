@@ -11,15 +11,26 @@
 </h:head>
 
 <h:body>
-    <h:outputText value="Total price: #{order.totalPrice}"/>
-    <h:form id="payment-info-form">
-        <!-- tady udelas jenom validaci, aby to splnovali nejaky format a do Order propis jenom paid - true/false. Dole tedy bude misto odkazu metoda -->
-        Credit card number:
-        <h:inputText required="true"/>
-        Validate untill:
-        <h:inputText required="true"/>
-        <h:commandButton value="Submit" action="order-submit"/>
-        <h:commandButton value="Cancel" action="#{order.endConversation()}"/>
+    <h:outputText value="Total price: #{orderController.order.totalPrice}"/>
+    <h:form id="payment_details">
+        <!-- new customer -->
+        <h:outputLabel for="card_number" value="Card number"/>
+        <h:inputText id="card_number" value="#{orderController.creditCard.number}">
+            <f:validator validatorId="cardNumberValidator"/>
+        </h:inputText>
+        <h:message for="card_number" style="color: red;"/>
+
+
+        <h:outputLabel for="validity" value="Validity"/>
+        <h:inputText id="validity" value="#{orderController.creditCard.validity}">
+            <f:validator validatorId="cardValidityValidator"/>
+        </h:inputText>
+        <h:message for="validity" style="color: red;"/>
+
+        <h:commandButton value="Submit" action="#{orderController.submitPaymentDetails()}"/>
+        <!-- tady bude volana metoda, ktera smaze vsechno co ma -->
+        <h:commandButton value="Cancel"/>
+
     </h:form>
 </h:body>
 </html>

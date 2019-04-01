@@ -19,7 +19,7 @@ public class JPAService {
      * @return
      */
     public List<Product> getResultList() {
-        Query query = entityManager.createQuery("FROM Product");
+        Query query = entityManager.createQuery("FROM Product WHERE units_in_stock > 0");
         try {
             return query.getResultList();
         } catch (Exception e) {
@@ -79,5 +79,17 @@ public class JPAService {
             System.err.println("Exception while finding the ordered item: " + e);
         }
         return null;
+    }
+
+    /**
+     * Save Product to DB
+     * @param product
+     */
+    public void saveProduct(Product product) {
+        try {
+            entityManager.merge(product);
+        } catch (Exception e) {
+            System.err.println("Exception while saving the product: " + e);
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 public class Customer {
     @Id
     @Column(name = "customer_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     @Column(name = "first_name")
     private String firstName;

@@ -7,6 +7,7 @@ public class CreditCard {
 
     @Id
     @Column(name = "credit_card_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String number;
     private String validity;

@@ -7,6 +7,7 @@ import java.util.List;
 public class Address {
     @Id
     @Column(name = "address_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String country;
     private String city;

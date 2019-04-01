@@ -1,26 +1,37 @@
 package cz.ucl.eshop.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "ordered_item")
 public class OrderedItem {
     @Id
     @Column(name = "ordered_item_id")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;
-    private double price;
-    @ManyToMany(mappedBy = "orderedItemList")
-    private List<Order> orderList;
+    @Column(name = "price_all_units")
+    private double priceAllUnits;
+    @ManyToOne
+    @JoinColumn(name = "order_of_goods_id")
+    private Order order;
 
-    public long getId() {
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+        order.getOrderedItemList().add(this);
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -40,11 +51,11 @@ public class OrderedItem {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPriceAllUnits() {
+        return priceAllUnits;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPriceAllUnits(double priceAllUnits) {
+        this.priceAllUnits = priceAllUnits;
     }
 }

@@ -1,6 +1,7 @@
 package cz.ucl.eshop.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,9 +20,31 @@ public class Customer {
     private List<CreditCard> creditCardList;
     @ManyToMany
     @JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private List<Address> addresses;
+    private List<Address> addressList;
     @OneToMany(mappedBy = "customer")
     private List<Order> orderList;
+
+    public Customer(){
+        this.creditCardList = new ArrayList<>();
+        this.addressList = new ArrayList<>();
+        this.orderList = new ArrayList<>();
+    }
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addresses) {
+        this.addressList = addresses;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
 
     public long getId() {
         return id;

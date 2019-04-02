@@ -17,6 +17,11 @@ body {
     margin-right: 50%;
 }
 
+#shopping-cart-navbar {
+    float: right;
+    background: #4CAF50;
+}
+
 .product-list-image {
     max-height: 80%;
     max-width: 80%;

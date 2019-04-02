@@ -1,6 +1,7 @@
 package cz.ucl.eshop.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,8 +16,20 @@ public class Address {
     @Column(name = "house_number")
     private int houseNumber;
     private int zip;
-    @ManyToMany(mappedBy = "addresses")
+    @ManyToMany(mappedBy = "addressList")
     private List<Customer> customers;
+
+    public Address(){
+        this.customers = new ArrayList<>();
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     public long getId() {
         return id;

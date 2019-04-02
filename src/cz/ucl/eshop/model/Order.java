@@ -22,6 +22,12 @@ public class Order {
     @OneToMany(mappedBy = "order")
     List<OrderedItem> orderedItemList;
 
+    public Order(OrderStatus orderStatus){
+        this.orderStatus = orderStatus;
+        this.orderedItemList = new ArrayList<>();
+    }
+
+
     public Order(){ orderedItemList = new ArrayList<>(); }
 
     public Long getId() {

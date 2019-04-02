@@ -17,10 +17,9 @@
         <div id="page">
             <div id="header">
                 <ul>
-                    <li><a href="Products">Home</a></li>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li style="float:right"><h:link value="Items: #{shoppingCartController.selectedProducts.size()}" outcome="shopping-cart"><!--i class="fas fa-shopping-cart"></i--></h:link></li>
+                    <li><h:link value="Product list" outcome="product-list"/></li>
+                    <li><h:link value="About"/></li>
+                    <li id="shopping-cart-navbar"><h:link value="Items: #{shoppingCartController.selectedProducts.size()}" outcome="shopping-cart"><!--i class="fas fa-shopping-cart"></i--></h:link></li>
                 </ul>
             </div>
 

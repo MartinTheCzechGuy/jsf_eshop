@@ -1,8 +1,10 @@
 package cz.ucl.eshop.ejb;
 
 import cz.ucl.eshop.model.*;
+import cz.ucl.eshop.model.types.OrderStatus;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
@@ -16,18 +18,21 @@ public class OrderController implements Serializable {
 
     @Inject
     private Conversation conversation;
-
+    @EJB
+    private JPAService jpaService;
+    @Inject
+    private ShoppingCartController shoppingCartController;
     private Order order;
     private Customer customer;
     private Address address;
     private CreditCard creditCard;
 
-    public Conversation getConversation() {
-        return conversation;
+    public ShoppingCartController getShoppingCartController() {
+        return shoppingCartController;
     }
 
-    public void setConversation(Conversation conversation) {
-        this.conversation = conversation;
+    public void setShoppingCartController(ShoppingCartController shoppingCartController) {
+        this.shoppingCartController = shoppingCartController;
     }
 
     public CreditCard getCreditCard() {
@@ -68,7 +73,7 @@ public class OrderController implements Serializable {
         conversation.begin();
         customer = new Customer();
         address = new Address();
-        order = new Order();
+        order = new Order(OrderStatus.NEW);
         creditCard = new CreditCard();
     }
 
@@ -78,12 +83,27 @@ public class OrderController implements Serializable {
      * @return
      */
     public String submitOrder(){
-        //TODO Tady ta metoda musi vse ulozit do DB - objednavka vznikla
-        System.out.println("checkuju co mam");
-        //ukladani do DB
+        jpaService.createCustomer(customer);
+        jpaService.createOrder(order);
+        jpaService.createAddress(address);
+        jpaService.createCreditCard(creditCard);
+
+        order.setCustomer(customer);
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+        //order.setTotalPrice();
+        customer.getCreditCardList().add(creditCard);
+        customer.getAddressList().add(address);
+        customer.getOrderList().add(order);
+        address.getCustomers().add(customer);
+        creditCard.setCustomer(customer);
+
+        jpaService.saveCustomer(customer);
+        jpaService.saveOrder(order);
+        jpaService.saveAddress(address);
+        jpaService.saveCreditCard(creditCard);
+
         conversation.end();
         return "product-list";
-
     }
 
     /**
@@ -92,26 +112,25 @@ public class OrderController implements Serializable {
      * @return
      */
     public String cancelOrder() {
-        // TODO vsechny itemy musis vratit na sklad!!!
         conversation.end();
-        return "product-list";
+        return "product-list?faces-redirect=true";
     }
 
     /**
      * Load all selected items from shopping card into the order
-     * @param orderedItemList
      */
-    public void loadSelectedItems(List<OrderedItem> orderedItemList){
-        order.getOrderedItemList().addAll(orderedItemList);
+    public String loadSelectedItems(){
+        this.order.getOrderedItemList().addAll(shoppingCartController.getSelectedProducts());
+        shoppingCartController.getSelectedProducts().clear();
+        return "checkout";
     }
 
-
-    // TODO nemusi byt metody
     /**
      * volana po odeslani formulare s Customer a Address -
      *
      */
     public String submitCustomerDetails(){
+        this.order.setOrderStatus(OrderStatus.PENDING_PAYMENT);
         return "payment-info";
     }
 

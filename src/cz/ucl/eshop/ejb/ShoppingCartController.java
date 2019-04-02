@@ -4,6 +4,7 @@ import cz.ucl.eshop.model.OrderedItem;
 import cz.ucl.eshop.model.Product;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -63,6 +64,15 @@ public class ShoppingCartController implements Serializable {
         selectedQuantity = 1;
     }
 
+    @PreDestroy
+    public void destroy(){
+        for (OrderedItem orderedItem : selectedProducts) {
+            Product product = JPAService.findProductById(orderedItem.getId());
+            product.setUnitsInStock(product.getUnitsInStock() + orderedItem.getQuantity());
+            JPAService.saveProduct(product);
+        }
+    }
+
     /** Add item to the order
      *
      * @param productId
@@ -102,7 +112,9 @@ public class ShoppingCartController implements Serializable {
         Product product = JPAService.findProductById(productId);
         OrderedItem orderedItem = this.itemAlreadyInCart(product);
 
-        if (selectedQuantity == orderedItem.getQuantity()) {
+        if(selectedQuantity == 0){
+          // TODO odstranit z kosiku
+        } else if (selectedQuantity == orderedItem.getQuantity()) {
             quantityUnavaible = false;
         } else if ((selectedQuantity < orderedItem.getQuantity()) || (selectedQuantity <= orderedItem.getProduct().getUnitsInStock())) {
             // required amount is avaible
@@ -155,5 +167,9 @@ public class ShoppingCartController implements Serializable {
      */
     public double getOrderPrice(){
         return selectedProducts.stream().mapToDouble(OrderedItem::getPriceAllUnits).sum();
+    }
+
+    public void clearCart() {
+        this.selectedProducts.clear();
     }
 }

@@ -12,7 +12,7 @@
     <h:body>
         <ui:composition template="layout.xhtml">
             <ui:define name="page-content">
-                <h:outputLabel value="So far you have selected #{shoppingCartController.selectedProducts.size()} products listed bellow:"/>
+                <h:outputLabel value="You have selected #{shoppingCartController.selectedProducts.size()} items:"/>
                 <h:dataTable value="#{shoppingCartController.selectedProducts}" var="selectedItem" id="shoppingCartTable">
                     <h:column>
                         <h:graphicImage value="/resources/images/#{selectedItem.product.img}" alt="image not found" styleClass="shopping-cart-image"/>
@@ -44,10 +44,11 @@
                     </h:column>
                 </h:dataTable>
 
+                <!-- PODMINENY RENDER - jen pokud jsou v kosiku nejake itemy -->
                 <h:outputText value="Total price #{shoppingCartController.getOrderPrice()}"/>
-
-
-                <h:button value="Proceed to checkout" outcome="checkout"/>
+                <h:form>
+                    <h:commandButton value="Proceed to checkout" action="#{orderController.loadSelectedItems()}"/>
+                </h:form>
 
                 <h:outputScript rendered="#{shoppingCartController.quantityUnavaible}">
                     alert("Selected amount is not avaible.");

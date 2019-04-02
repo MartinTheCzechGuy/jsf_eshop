@@ -12,29 +12,32 @@
 
 <h:body>
 
-    <h:dataTable value="#{orderController.order.orderedItemList}" var="selectedItem" id="ordersumTable">
-        <h:column>
-            <h:outputText value="#{selectedItem.product.name}"/>
-        </h:column>
+    <ui:composition template="layout.xhtml">
+        <ui:define name="page-content">
+            <h:dataTable value="#{orderController.order.orderedItemList}" var="selectedItem" id="ordersumTable">
+                <h:column>
+                    <h:outputText value="#{selectedItem.product.name}"/>
+                </h:column>
 
-        <h:column>
-            <h:outputText value="Quantity #{selectedItem.quantity}"/>
-            <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
-        </h:column>
+                <h:column>
+                    <h:outputText value="Quantity #{selectedItem.quantity}"/>
+                    <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
+                </h:column>
 
-        <h:column>
-            <h:outputText value="#{orderController.order.totalPrice}"/>
-        </h:column>
+                <h:column>
+                    <h:outputText value="#{orderController.order.totalPrice}"/>
+                </h:column>
 
-    </h:dataTable>
+            </h:dataTable>
 
-    <h:form>
-        <h:commandButton value="Submit order" action="#{orderController.submitOrder()}"/>
-        <h:commandButton value="Cancel" action="#{orderController.cancelOrder()}"/>
-    </h:form>
-
-
-
+            <h:form>
+                <h:commandButton value="Submit order" action="#{orderController.submitOrder()}"/>
+                <h:commandButton value="Cancel" action="#{orderController.cancelOrder()}">
+                    <f:ajax/>
+                </h:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 
 </h:body>
 </html>

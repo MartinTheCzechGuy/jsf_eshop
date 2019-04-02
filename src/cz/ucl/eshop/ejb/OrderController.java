@@ -72,14 +72,27 @@ public class OrderController implements Serializable {
         creditCard = new CreditCard();
     }
 
+    /**
+     * Submit order - save all the data to DB and end conversation.
+     *
+     * @return
+     */
     public String submitOrder(){
+        //TODO Tady ta metoda musi vse ulozit do DB - objednavka vznikla
         System.out.println("checkuju co mam");
         //ukladani do DB
+        conversation.end();
         return "product-list";
 
     }
 
+    /**
+     * End conversation - order is either submited or canceled
+     *
+     * @return
+     */
     public String cancelOrder() {
+        // TODO vsechny itemy musis vratit na sklad!!!
         conversation.end();
         return "product-list";
     }
@@ -92,8 +105,10 @@ public class OrderController implements Serializable {
         order.getOrderedItemList().addAll(orderedItemList);
     }
 
+
+    // TODO nemusi byt metody
     /**
-     * volana po odeslani formulare s Customer a Address
+     * volana po odeslani formulare s Customer a Address -
      *
      */
     public String submitCustomerDetails(){

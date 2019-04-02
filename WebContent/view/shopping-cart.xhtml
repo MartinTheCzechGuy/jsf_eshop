@@ -15,28 +15,39 @@
                 <h:outputLabel value="So far you have selected #{shoppingCartController.selectedProducts.size()} products listed bellow:"/>
                 <h:dataTable value="#{shoppingCartController.selectedProducts}" var="selectedItem" id="shoppingCartTable">
                     <h:column>
-                        <h:outputText value="#{selectedItem.product.img}"/>
+                        <h:graphicImage value="/resources/images/#{selectedItem.product.img}" alt="image not found" styleClass="shopping-cart-image"/>
                     </h:column>
 
-                    <h:column>
+                    <h:column id="shopping-cart-product-name">
                         <h:outputText value="#{selectedItem.product.name}"/>
                     </h:column>
 
-                    <h:column>
-                        <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
+                    <h:column >
+                        <h:outputText value="Quantity: #{selectedItem.quantity}"/>
                     </h:column>
 
                     <h:column>
                         <h:form>
-                            <h:outputText value="Quantity: #{selectedItem.quantity}"/>
                             <h:outputLabel for="amount" value="New Quantity: "/>
                             <h:inputText id="amount" required="true" value="#{shoppingCartController.selectedQuantity}"/>
                             <h:commandButton value="Change quantity" action="#{shoppingCartController.changeQuantity(selectedItem.product.id)}"/>
                         </h:form>
                     </h:column>
+
+                    <h:column>
+                        <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
+                    </h:column>
+                    <h:column>
+                        <h:form>
+                            <h:commandButton value="Remove from the cart" action="#{shoppingCartController.removeFromCart(selectedItem.product.id)}"/>
+                        </h:form>
+                    </h:column>
                 </h:dataTable>
 
-                <h:link value="Proceed" outcome="checkout"/>
+                <h:outputText value="Total price #{shoppingCartController.getOrderPrice()}"/>
+
+
+                <h:button value="Proceed to checkout" outcome="checkout"/>
 
                 <h:outputScript rendered="#{shoppingCartController.quantityUnavaible}">
                     alert("Selected amount is not avaible.");

@@ -23,7 +23,7 @@ INSERT INTO product (NAME, PRICE, IMG, DESCRIPTION, UNITS_IN_STOCK)
   VALUES('RYZE Tello Boost Combo', 5000, 'TelloBoost.jpeg', 'Dron - micro selfie dron, vybaven vestavěnou HD kamerou s rozlišením videa 720/30p, 80g, přenos na vzdálenost 100m, varianta v Combo Boost balení', 120);
 
 INSERT INTO product (NAME, PRICE, IMG, DESCRIPTION, UNITS_IN_STOCK)
-  VALUES('Xiaomi Mi Drone Mini', 1300, 'xiaomi.jpeg', 'Dron s pokročilými funkcemi, Headless Mode, G-senzor, HD kamera, gyroskop, akcelerometr, optické snímače, funkce Altitude Hold, infračervený režim bitvy, dosah až 50m, délka letu 7-10 minut, spárování s aplikací v telefonu', 54);DROP TABLE IF EXISTS customer;
+  VALUES('Xiaomi Mi Drone Mini', 1300, 'xiaomi.jpeg', 'Dron s pokročilými funkcemi, Headless Mode, G-senzor, HD kamera, gyroskop, akcelerometr, optické snímače, funkce Altitude Hold, infračervený režim bitvy, dosah až 50m, délka letu 7-10 minut, spárování s aplikací v telefonu', 54);
 
 DROP TABLE IF EXISTS customer;
 

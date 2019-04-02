@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Named
 @SessionScoped
 public class ShoppingCartController implements Serializable {
@@ -91,12 +93,21 @@ public class ShoppingCartController implements Serializable {
         return "product-list";
     }
 
+    /**
+     * Change quantity of an product in shopping cart
+     * @param productId
+     * @return
+     */
     public String changeQuantity (long productId) {
         Product product = JPAService.findProductById(productId);
         OrderedItem orderedItem = this.itemAlreadyInCart(product);
 
-        if (selectedQuantity <= orderedItem.getProduct().getUnitsInStock()) {
-            orderedItem.setQuantity(orderedItem.getQuantity() + selectedQuantity);
+        if (selectedQuantity == orderedItem.getQuantity()) {
+            quantityUnavaible = false;
+        } else if ((selectedQuantity < orderedItem.getQuantity()) || (selectedQuantity <= orderedItem.getProduct().getUnitsInStock())) {
+            // required amount is avaible
+            product.setUnitsInStock(product.getUnitsInStock() + orderedItem.getQuantity());
+            orderedItem.setQuantity(selectedQuantity);
             product.setUnitsInStock(product.getUnitsInStock() - selectedQuantity);
             quantityUnavaible = false;
             JPAService.saveProduct(product);
@@ -104,14 +115,16 @@ public class ShoppingCartController implements Serializable {
         } else {
             quantityUnavaible = true;
         }
+
         selectedQuantity = 1;
         return "shopping-cart";
     }
 
-    public void changeAmount(long productId, Integer newAmount){
-        //this.selectedProducts.computeIfPresent(JPAService.findProductById(productId), (k,v) -> v = newAmount);
-    }
-
+    /**
+     * Return OrderedItem if its already selected in the shopping cart
+     * @param product
+     * @return
+     */
     private OrderedItem itemAlreadyInCart(Product product){
         for (OrderedItem orderedItem : selectedProducts) {
             if (orderedItem.getProduct().getId() == product.getId()) {
@@ -119,5 +132,28 @@ public class ShoppingCartController implements Serializable {
             }
         }
         return null;
+    }
+
+    /**
+     * Remove product from the shopping cart
+     * @param productId
+     * @return
+     */
+    public String removeFromCart(long productId){
+        Product product = JPAService.findProductById(productId);
+        OrderedItem orderedItem = this.itemAlreadyInCart(product);
+
+        product.setUnitsInStock(product.getUnitsInStock() + orderedItem.getQuantity());
+        JPAService.saveProduct(product);
+        this.selectedProducts.remove(orderedItem);
+        return "shopping-cart";
+    }
+
+    /**
+     * Count price for whole order
+     * @return
+     */
+    public double getOrderPrice(){
+        return selectedProducts.stream().mapToDouble(OrderedItem::getPriceAllUnits).sum();
     }
 }

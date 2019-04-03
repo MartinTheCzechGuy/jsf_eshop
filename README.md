@@ -1,7 +1,8 @@
 Simple JSF e-shop, to run it, you have to do the following steps:
 
 1) Download JDK 8 or higher and Wildfly 16 (app uses h2 DB which is included in Wildfly)
-2) Configure the DB server - in the Wildflyfolder/standalone/standalone.xml find the <datasources> element and edit it as following:
+2) Configure the DB server - in the Wildflyfolder/standalone/standalone.xml find the `<datasources>` element and edit it as following:
+      ```
       <datasource jndi-name="java:jboss/datasources/ExampleDS"
                   pool-name="ExampleDS" enabled="true" use-java-context="true"
                   statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
@@ -12,6 +13,7 @@ Simple JSF e-shop, to run it, you have to do the following steps:
                         <password>sa</password>
                     </security>
       </datasource>
+      ```
 3) go to ..\modules\system\layers\base\com\h2database\h2\main and run the DB from terminal: java -jar h2-x.y.zzz.jar
 4) log to the db console - the password is "sa" so as the username
 5) run the SQL script (folder "h2 initialization SQL) and create the DB schema

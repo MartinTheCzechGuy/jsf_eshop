@@ -18,6 +18,15 @@ public class OrderedItem {
     @JoinColumn(name = "order_of_goods_id")
     private Order order;
 
+    public OrderedItem(Product product, int quantity, double priceAllUnits, Order order){
+        this.product = product;
+        this.quantity = quantity;
+        this.priceAllUnits = priceAllUnits;
+        this.order = order;
+    }
+
+    public OrderedItem(){}
+
     public OrderedItem(Product product){
         this.product = product;
     }
@@ -28,7 +37,6 @@ public class OrderedItem {
 
     public void setOrder(Order order) {
         this.order = order;
-        order.getOrderedItemList().add(this);
     }
 
     public Long getId() {

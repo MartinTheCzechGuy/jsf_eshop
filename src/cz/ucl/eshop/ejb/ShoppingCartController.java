@@ -168,8 +168,4 @@ public class ShoppingCartController implements Serializable {
     public double getOrderPrice(){
         return selectedProducts.stream().mapToDouble(OrderedItem::getPriceAllUnits).sum();
     }
-
-    public void clearCart() {
-        this.selectedProducts.clear();
-    }
 }

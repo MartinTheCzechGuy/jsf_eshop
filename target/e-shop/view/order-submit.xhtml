@@ -14,23 +14,21 @@
 
     <ui:composition template="layout.xhtml">
         <ui:define name="page-content">
-            <h:dataTable value="#{orderController.order.orderedItemList}" var="selectedItem" id="ordersumTable">
+            <h:dataTable value="#{orderController.order.orderedItemList}" var="selectedItem" styleClass="order-submit-table" rowClasses="order-submit-item-name, order-submit-quantity-price">
                 <h:column>
                     <h:outputText value="#{selectedItem.product.name}"/>
                 </h:column>
 
                 <h:column>
                     <h:outputText value="Quantity #{selectedItem.quantity}"/>
-                    <h:outputText value="Total price: #{selectedItem.priceAllUnits}" />
-                </h:column>
-
-                <h:column>
-                    <h:outputText value="#{orderController.order.totalPrice}"/>
+                    <h:outputText value="Price: #{selectedItem.priceAllUnits}" />
                 </h:column>
 
             </h:dataTable>
 
-            <h:form>
+            <h:outputText value="Total price: #{orderController.order.totalPrice}"/>
+
+            <h:form style="margin-top: 10px">
                 <h:commandButton value="Submit order" action="#{orderController.submitOrder()}"/>
                 <h:commandButton value="Cancel" action="#{orderController.cancelOrder()}">
                     <f:ajax/>

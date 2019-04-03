@@ -102,32 +102,6 @@ public class JPAService {
         }
     }
 
-    /** Update ordered item int DB
-     *
-     * @param orderedItem
-     */
-    public void saveOrderedItem(OrderedItem orderedItem) {
-        try {
-            entityManager.merge(orderedItem);
-        } catch (Exception e) {
-            System.err.println("Exception while saving the Ordered Item: " + e);
-        }
-    }
-
-    /** find OrderedItem instance by its ID
-     *
-     * @param id
-     * @return
-     */
-    public OrderedItem findItemById (long id) {
-        try {
-            return entityManager.find(OrderedItem.class, id);
-        } catch (Exception e) {
-            System.err.println("Exception while finding the ordered item: " + e);
-        }
-        return null;
-    }
-
     /**
      * Save Product to DB
      * @param product

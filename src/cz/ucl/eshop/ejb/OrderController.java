@@ -10,6 +10,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 @Named
@@ -88,22 +89,33 @@ public class OrderController implements Serializable {
         jpaService.createAddress(address);
         jpaService.createCreditCard(creditCard);
 
+        this.createOrderedItems();
+
         order.setCustomer(customer);
         order.setOrderStatus(OrderStatus.CONFIRMED);
-        //order.setTotalPrice();
         customer.getCreditCardList().add(creditCard);
         customer.getAddressList().add(address);
         customer.getOrderList().add(order);
         address.getCustomers().add(customer);
         creditCard.setCustomer(customer);
 
-        jpaService.saveCustomer(customer);
         jpaService.saveOrder(order);
+        jpaService.saveCustomer(customer);
         jpaService.saveAddress(address);
         jpaService.saveCreditCard(creditCard);
 
         conversation.end();
         return "product-list";
+    }
+
+    /**
+     * Save OrderedItem instances to the DB
+     */
+    private void createOrderedItems() {
+        Iterator<OrderedItem> iterator = this.order.getOrderedItemList().iterator();
+        while (iterator.hasNext()) {
+            jpaService.createOrderedItem(iterator.next());
+        }
     }
 
     /**
@@ -120,13 +132,23 @@ public class OrderController implements Serializable {
      * Load all selected items from shopping card into the order
      */
     public String loadSelectedItems(){
-        this.order.getOrderedItemList().addAll(shoppingCartController.getSelectedProducts());
+        this.addOrderedItems(shoppingCartController.getSelectedProducts());
+        this.order.setTotalPrice(order.getOrderedItemList().stream().mapToDouble(OrderedItem::getPriceAllUnits).sum());
         shoppingCartController.getSelectedProducts().clear();
         return "checkout";
     }
 
+    private void addOrderedItems(List<OrderedItem> selectedProducts) {
+        Iterator<OrderedItem> i = selectedProducts.iterator();
+        while (i.hasNext()) {
+            OrderedItem orderedItem = i.next();
+            orderedItem.setOrder(this.order);
+            this.order.getOrderedItemList().add(orderedItem);
+        }
+    }
+
     /**
-     * volana po odeslani formulare s Customer a Address -
+     * After sending the customer details and adress change the order status and proceed to payment
      *
      */
     public String submitCustomerDetails(){
@@ -135,7 +157,7 @@ public class OrderController implements Serializable {
     }
 
     /**
-     * volana po odeslani formulare s CreditCard
+     * After submit the payment details, proceed to order submit
      *
      */
     public String submitPaymentDetails(){

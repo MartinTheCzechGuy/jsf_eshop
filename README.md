@@ -1,7 +1,7 @@
 Simple JSF e-shop, to run it, you have to do the following steps:
 
-1) Download JDK 8 or higher and Wildfly 16 (app uses h2 DB which is included in Wildfly)
-2) Configure the DB server - in the ...\standalone\standalone.xml find the `<datasources>` element and edit it as following:
+1) download JDK 8 or higher and Wildfly 16 (app uses h2 DB which is included in Wildfly)
+2) configure the DB server - in the ...\standalone\standalone.xml find the `<datasources>` element and edit it as following:
       ```
       <datasource jndi-name="java:jboss/datasources/ExampleDS"
                   pool-name="ExampleDS" enabled="true" use-java-context="true"
